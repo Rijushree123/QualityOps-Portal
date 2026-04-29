@@ -1,0 +1,65 @@
+<div class="dashboard-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo">
+      <h2>QualityOps</h2>
+    </div>
+
+    <nav>
+      <a routerLink="/dashboard">Dashboard</a>
+      <a routerLink="/employees">Employees</a>
+      <a routerLink="/departments">Departments</a>
+      <a routerLink="/leave-requests">Leave Requests</a>
+      <a routerLink="/test-cases">Test Cases</a>
+      <a routerLink="/test-runs">Test Runs</a>
+      <a routerLink="/defects">Defects</a>
+      <a routerLink="/reports">Reports</a>
+    </nav>
+  </aside>
+
+  <!-- Main Area -->
+  <div class="main-section">
+
+    <!-- Navbar -->
+    <header class="navbar">
+      <div class="page-title">Dashboard</div>
+
+      <div class="user-info">
+        <span>Welcome, Rijushree</span>
+        <button (click)="logout()">Logout</button>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="content">
+
+      <div class="card-grid">
+
+        <div class="card">
+          <h3>Total Employees</h3>
+          <p>128</p>
+        </div>
+
+        <div class="card">
+          <h3>Open Defects</h3>
+          <p>19</p>
+        </div>
+
+        <div class="card">
+          <h3>Pass Rate</h3>
+          <p>92%</p>
+        </div>
+
+        <div class="card">
+          <h3>Pending Leaves</h3>
+          <p>7</p>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+</div>

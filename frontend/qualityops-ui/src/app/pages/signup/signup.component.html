@@ -1,0 +1,54 @@
+<div class="signup-page">
+  <div class="signup-card">
+
+    <div class="brand-section">
+      <h1>Create Account</h1>
+      <p>Join QualityOps Enterprise Portal</p>
+    </div>
+
+    <form (ngSubmit)="signup()">
+
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" [(ngModel)]="fullname" name="fullname" placeholder="Enter full name" required>
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" [(ngModel)]="email" name="email" placeholder="Enter email" required>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" [(ngModel)]="password" name="password" placeholder="Enter password" required>
+      </div>
+
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" placeholder="Confirm password" required>
+      </div>
+
+      <div class="form-group">
+        <label>Department</label>
+        <select>
+          <option>QA</option>
+          <option>Development</option>
+          <option>HR</option>
+          <option>Operations</option>
+        </select>
+      </div>
+
+      <button type="submit">Create Account</button>
+
+      <p *ngIf="error">{{ error }}</p>
+      <p *ngIf="success">{{ success }}</p>
+      
+      <p class="footer-text">
+        Already have an account?
+        <a routerLink="/">Login</a>
+      </p>
+
+    </form>
+
+  </div>
+</div>
