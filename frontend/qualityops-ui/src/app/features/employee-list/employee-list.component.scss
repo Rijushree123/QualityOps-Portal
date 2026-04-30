@@ -1,0 +1,227 @@
+.card {
+  background: white;
+  padding: 24px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+h2 {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+/* Top bar (search + buttons) */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.top-bar input {
+  padding: 10px 14px;
+  width: 280px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  outline: none;
+  transition: 0.2s;
+}
+
+.top-bar input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+.top-bar button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.top-bar button:hover {
+  background: #1d4ed8;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #f9fafb;
+}
+
+th {
+  text-align: left;
+  padding: 14px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+td {
+  padding: 14px;
+  border-top: 1px solid #f1f5f9;
+}
+
+/* Row hover */
+tbody tr:hover {
+  background: #f9fafb;
+}
+
+/* Action buttons */
+td button {
+  margin-right: 8px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Edit button */
+td button:first-child {
+  background: #10b981;
+  color: white;
+}
+
+td button:first-child:hover {
+  background: #059669;
+}
+
+/* Delete button */
+td button:last-child {
+  background: #ef4444;
+  color: white;
+}
+
+td button:last-child:hover {
+  background: #dc2626;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .top-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .top-bar input {
+    width: 100%;
+  }
+
+  table {
+    font-size: 12px;
+  }
+}
+
+/* 🔥 Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 1000;
+}
+
+/* Modal Box */
+.modal {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  width: 400px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal input,
+.modal select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Buttons */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-actions button:first-child {
+  background: #2563eb;
+  color: white;
+  padding: 5px  10px;
+  border-radius: 8px;
+  border: none;
+}
+
+.modal-actions button:last-child {
+  background: #e5e7eb;
+  padding: 5px  10px;
+  border-radius: 8px;
+  border: none;
+}
+.error {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: -8px;
+  margin-bottom: 6px;
+}
+
+.modal form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.modal .field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal .field.full-width {
+  grid-column: span 2;
+}
+
+.modal input,
+.modal select {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Make full-width fields */
+.modal input[name="name"],
+.modal input[name="email"],
+.modal select[name="status"] {
+  grid-column: span 2;
+}
+
+/* Buttons full width row */
+.modal-actions {
+  grid-column: span 2;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal .server-error {
+  grid-column: span 2;
+  color: #ef4444;
+  font-size: 14px;
+  text-align: center;
+}

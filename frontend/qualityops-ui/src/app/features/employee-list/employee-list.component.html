@@ -1,0 +1,160 @@
+<div class="card">
+  <h2>Employees</h2>
+
+  <div class="top-bar">
+    <input [(ngModel)]="searchText" placeholder="Search employee..." />
+    <button (click)="search()">Search</button>
+    <button (click)="openModal()">Add Employee</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Department</th>
+        <th>Designation</th>
+        <th>Salary</th>
+        <th>Joining Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let emp of employees">
+        <td>{{ emp.id }}</td>
+        <td>{{ emp.name }}</td>
+        <td>{{ emp.email }}</td>
+        <td>{{ emp.department }}</td>
+        <td>{{ emp.designation }}</td>
+        <td>{{ emp.salary | currency }}</td>
+        <td>{{ emp.joiningDate }}</td>
+        <td>{{ emp.status }}</td>
+        <td>
+          <button (click)="editEmployee(emp)">Edit</button>
+          <button (click)="deleteEmployee(emp.id!)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal -->
+<!-- 🔥 MODAL -->
+<div class="modal-overlay" *ngIf="showModal">
+  <div class="modal">
+    <h2>{{ isEditMode ? "Edit Employee" : "Add Employee" }}</h2>
+    <form #empForm="ngForm">
+      <div class="field full-width">
+        <input
+          name="name"
+          [(ngModel)]="newEmployee.name"
+          placeholder="Name"
+          required
+          #name="ngModel"
+        />
+        <div class="error" *ngIf="name.invalid && name.touched">
+          Name is required
+        </div>
+      </div>
+
+      <div class="field full-width">
+        <input
+          name="email"
+          [(ngModel)]="newEmployee.email"
+          placeholder="Email"
+          required
+          email
+          #email="ngModel"
+        />
+        <div class="error" *ngIf="email.invalid && email.touched">
+          Enter valid email
+        </div>
+      </div>
+
+      <div class="field">
+        <input
+          name="department"
+          [(ngModel)]="newEmployee.department"
+          placeholder="Department"
+          required
+          #dept="ngModel"
+        />
+        <div class="error" *ngIf="dept.invalid && dept.touched">
+          Department is required
+        </div>
+      </div>
+
+      <div class="field">
+        <input
+          name="designation"
+          [(ngModel)]="newEmployee.designation"
+          placeholder="Designation"
+          required
+          #desig="ngModel"
+        />
+        <div class="error" *ngIf="desig.invalid && desig.touched">
+          Designation is required
+        </div>
+      </div>
+
+      <div class="field">
+        <input
+          type="number"
+          name="salary"
+          [(ngModel)]="newEmployee.salary"
+          placeholder="Salary"
+          required
+          min="1"
+          #salary="ngModel"
+        />
+        <div class="error" *ngIf="salary.invalid && salary.touched">
+          Salary must be greater than 0
+        </div>
+      </div>
+
+      <div class="field">
+        <input
+          type="date"
+          name="joiningDate"
+          [(ngModel)]="newEmployee.joiningDate"
+          required
+          #date="ngModel"
+        />
+        <div class="error" *ngIf="date.invalid && date.touched">
+          Joining date is required
+        </div>
+      </div>
+
+      <div class="field full-width">
+        <select
+          name="status"
+          [(ngModel)]="newEmployee.status"
+          required
+          #status="ngModel"
+        >
+          <option value="">Select Status</option>
+          <option value="ACTIVE">Active</option>
+          <option value="INACTIVE">Inactive</option>
+        </select>
+        <div class="error" *ngIf="status.invalid && status.touched">
+          Status is required
+        </div>
+      </div>
+
+      <div class="server-error" *ngIf="errorMessage">{{ errorMessage }}</div>
+      <div class="modal-actions">
+        <button
+          type="button"
+          (click)="saveEmployee()"
+          [disabled]="empForm.invalid"
+        >
+          {{ isEditMode ? "Update" : "Save" }}
+        </button>
+        <button type="button" (click)="closeModal()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
