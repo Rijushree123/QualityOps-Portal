@@ -8,24 +8,28 @@ export interface Employee {
   email: string;
   department: string;
   designation: string;
-  salary: number|null;
+  salary: number | null;
   joiningDate: string;
   status: string;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EmployeeService {
-
   private apiUrl = 'http://localhost:8080/api/employees';
 
   constructor(private http: HttpClient) {}
 
-  getAllEmployees(): Observable<Employee[]> {
-    return this.http.get<Employee[]>(this.apiUrl);
-  }
+  getAllEmployees(page: number, size: number) {
+  return this.http.get<any>(
+    `${this.apiUrl}?page=${page}&size=${size}`
+  );
+}
 
+  getEmployeeById(id: number): Observable<Employee> {
+    return this.http.get<Employee>(`${this.apiUrl}/${id}`);
+  }
   createEmployee(employee: Employee): Observable<Employee> {
     return this.http.post<Employee>(this.apiUrl, employee);
   }

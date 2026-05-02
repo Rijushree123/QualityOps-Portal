@@ -2,6 +2,8 @@ package com.qualityops.portal.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,8 +36,8 @@ public class EmployeeController {
 	}
 
 	@GetMapping
-	public List<Employee> getAllEmployees() {
-		return employeeService.getAllEmployees();
+	public Page<Employee> getAllEmployees(Pageable pageable) {
+		return employeeService.getAllEmployees(pageable);
 	}
 
 	@GetMapping("/{id}")

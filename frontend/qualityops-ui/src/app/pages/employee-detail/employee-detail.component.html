@@ -1,0 +1,20 @@
+<div class="card" *ngIf="employee">
+
+  <h2>Employee Details</h2>
+
+  <div class="details-grid">
+
+    <div><strong>ID:</strong> {{ employee.id }}</div>
+    <div><strong>Name:</strong> {{ employee.name }}</div>
+    <div><strong>Email:</strong> {{ employee.email }}</div>
+    <div><strong>Department:</strong> {{ employee.department }}</div>
+    <div><strong>Designation:</strong> {{ employee.designation }}</div>
+    <div><strong>Salary:</strong> {{ employee.salary | currency }}</div>
+    <div><strong>Joining Date:</strong> {{ employee.joiningDate }}</div>
+    <div><strong>Status:</strong> {{ employee.status }}</div>
+
+  </div>
+  <button (click)="goBack()">← Back</button>
+</div>
+
+<div *ngIf="loading">Loading...</div>

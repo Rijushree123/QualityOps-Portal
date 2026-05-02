@@ -2,6 +2,8 @@ package com.qualityops.portal.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.qualityops.portal.dto.EmployeeRequest;
@@ -31,13 +33,13 @@ public class EmployeeService {
 	}
 
 	// GET ALL
-	public List<Employee> getAllEmployees() {
-		return employeeRepository.findAll();
+	public Page<Employee> getAllEmployees(Pageable pageable) {
+		return employeeRepository.findAll(pageable);
 	}
 
 	// GET BY ID
 	public Employee getEmployeeById(Long id) {
-		return employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee not found"));
+		return employeeRepository.findById(id).orElseThrow(() -> new BadRequestException("Employee not found"));
 	}
 
 	// UPDATE

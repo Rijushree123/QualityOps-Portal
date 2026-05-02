@@ -225,3 +225,13 @@ td button:last-child:hover {
   font-size: 14px;
   text-align: center;
 }
+
+td a {
+  color: #2563eb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+td a:hover{
+  text-decoration: underline;
+}

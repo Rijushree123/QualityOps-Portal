@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 import {
   EmployeeService,
   Employee,
 } from '../../core/services/employee.service';
+import { ToastService } from '../../core/services/toast.service';
 
 @Component({
   selector: 'app-employee-list',
@@ -18,9 +21,14 @@ export class EmployeeListComponent implements OnInit {
   employees: Employee[] = [];
   searchText: string = '';
   loading: boolean = false;
-  errorMessage: any;
+  errorMessage: string | null = null;
+  isSaving = false;
 
-  constructor(private employeeService: EmployeeService) {}
+  constructor(
+    private employeeService: EmployeeService,
+    private toast: ToastService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadEmployees();
@@ -29,13 +37,13 @@ export class EmployeeListComponent implements OnInit {
   // 🔹 Load all employees
   loadEmployees(): void {
     this.loading = true;
-    this.employeeService.getAllEmployees().subscribe({
+    this.employeeService.getAllEmployees(0,5).subscribe({
       next: (data) => {
-        this.employees = data;
+        this.employees = data.content;
         this.loading = false;
       },
       error: (err) => {
-        console.error('Error loading employees:', err);
+        this.toast.show('Failed to load employees', 'error');
         this.loading = false;
       },
     });
@@ -51,9 +59,10 @@ export class EmployeeListComponent implements OnInit {
     this.employeeService.deleteEmployee(id).subscribe({
       next: () => {
         this.loadEmployees();
+        this.toast.show('Employee deleted successfully', 'success'); // Show success message
       },
       error: (err) => {
-        console.error('Delete failed:', err);
+        this.toast.show(err.error?.message || 'Delete failed', 'error');
       },
     });
   }
@@ -66,7 +75,7 @@ export class EmployeeListComponent implements OnInit {
           this.employees = data;
         },
         error: (err) => {
-          console.error('Search error:', err);
+          this.toast.show(err.error?.message || 'Search failed', 'error');
         },
       });
     } else {
@@ -145,7 +154,8 @@ export class EmployeeListComponent implements OnInit {
   // Update Empolyee🔹
   editEmployee(emp: Employee) {
     this.isEditMode = true;
-    this.selectedEmployeeId = emp.id!;
+    if (!emp.id) return;
+    this.selectedEmployeeId = emp.id;
 
     this.newEmployee = { ...emp }; // pre-fill form
 
@@ -154,31 +164,44 @@ export class EmployeeListComponent implements OnInit {
 
   // Create or Update Employee based on mode
   saveEmployee() {
+    this.isSaving = true;
     if (this.isEditMode && this.selectedEmployeeId) {
       // 🔹 UPDATE
       this.employeeService
         .updateEmployee(this.selectedEmployeeId, this.newEmployee)
+        .pipe(finalize(() => (this.isSaving = false)))
         .subscribe({
           next: () => {
             this.closeModal();
             this.loadEmployees();
+            this.toast.show('Employee updated successfully', 'success'); // Show success message
           },
-          error: (err) => console.error('Update failed:', err),
+          error: (err) => {
+            this.toast.show('Update failed', 'error');
+          },
         });
     } else {
       // 🔹 CREATE
-      this.employeeService.createEmployee(this.newEmployee).subscribe({
-        next: () => {
-          this.closeModal();
-          this.loadEmployees();
-          this.errorMessage = null; // Clear error on success
-        },
-        error: (err) => {
-          console.error('Create failed:', err); 
-          // this.errorMessage = 'Failed to create employee. Please try with different email.';
-          this.errorMessage = err.error?.message || 'Something went wrong';
-        }
-      });
+      this.employeeService
+        .createEmployee(this.newEmployee)
+        .pipe(finalize(() => (this.isSaving = false)))
+        .subscribe({
+          next: () => {
+            this.closeModal();
+            this.loadEmployees();
+            this.errorMessage = null; // Clear error on success
+            this.toast.show('Employee created successfully', 'success'); // Show success message
+          },
+          error: (err) => {
+            this.toast.show('Create failed', 'error');
+            // this.errorMessage = 'Failed to create employee. Please try with different email.';
+            this.errorMessage = err.error?.message || 'Something went wrong';
+          },
+        });
     }
+  }
+
+  viewEmployee(id: number) {
+    this.router.navigate(['/employees', id]);
   }
 }

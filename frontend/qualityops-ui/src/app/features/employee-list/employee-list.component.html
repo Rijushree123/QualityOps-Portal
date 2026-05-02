@@ -25,7 +25,9 @@
     <tbody>
       <tr *ngFor="let emp of employees">
         <td>{{ emp.id }}</td>
-        <td>{{ emp.name }}</td>
+        <td>
+          <a (click)="viewEmployee(emp.id!)">{{ emp.name }}</a>
+        </td>
         <td>{{ emp.email }}</td>
         <td>{{ emp.department }}</td>
         <td>{{ emp.designation }}</td>
@@ -149,7 +151,7 @@
         <button
           type="button"
           (click)="saveEmployee()"
-          [disabled]="empForm.invalid"
+          [disabled]="empForm.invalid || isSaving"
         >
           {{ isEditMode ? "Update" : "Save" }}
         </button>
