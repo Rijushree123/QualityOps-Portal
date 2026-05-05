@@ -23,11 +23,14 @@ export class EmployeeListComponent implements OnInit {
   loading: boolean = false;
   errorMessage: string | null = null;
   isSaving = false;
+  currentPage = 0;
+  pageSize = 5;
+  totalPages = 0;
 
   constructor(
     private employeeService: EmployeeService,
     private toast: ToastService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -37,16 +40,42 @@ export class EmployeeListComponent implements OnInit {
   // 🔹 Load all employees
   loadEmployees(): void {
     this.loading = true;
-    this.employeeService.getAllEmployees(0,5).subscribe({
-      next: (data) => {
-        this.employees = data.content;
-        this.loading = false;
-      },
-      error: (err) => {
-        this.toast.show('Failed to load employees', 'error');
-        this.loading = false;
-      },
-    });
+    this.employeeService
+      .getAllEmployees(this.currentPage, this.pageSize)
+      .subscribe({
+        next: (data) => {
+          this.employees = data.content;
+          this.totalPages = data.totalPages;
+          // 🔥 FIX: if current page becomes invalid after delete
+          if (this.currentPage >= this.totalPages && this.totalPages > 0) {
+            this.currentPage = this.totalPages - 1;
+            this.loadEmployees(); // reload correct page
+            return;
+          }
+          if (this.employees.length === 0) {
+            this.toast.show('No employees on this page', 'info');
+          }
+          this.loading = false;
+        },
+        error: (err) => {
+          this.toast.show('Failed to load employees', 'error');
+          this.loading = false;
+        },
+      });
+  }
+
+  nextPage() {
+    if (this.currentPage + 1 < this.totalPages) {
+      this.currentPage++;
+      this.loadEmployees();
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.loadEmployees();
+    }
   }
 
   // 🔹 Delete employee

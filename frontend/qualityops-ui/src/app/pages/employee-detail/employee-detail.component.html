@@ -1,20 +1,35 @@
-<div class="card" *ngIf="employee">
-
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="!loading && !employee">
+  <div class="empty-state">
+    <p>Employee not found</p>
+    <button (click)="goBack()">Go Back</button>
+  </div>
+</div>
+<div class="card" *ngIf="!loading && employee">
   <h2>Employee Details</h2>
 
   <div class="details-grid">
-
     <div><strong>ID:</strong> {{ employee.id }}</div>
     <div><strong>Name:</strong> {{ employee.name }}</div>
     <div><strong>Email:</strong> {{ employee.email }}</div>
     <div><strong>Department:</strong> {{ employee.department }}</div>
     <div><strong>Designation:</strong> {{ employee.designation }}</div>
     <div><strong>Salary:</strong> {{ employee.salary | currency }}</div>
-    <div><strong>Joining Date:</strong> {{ employee.joiningDate }}</div>
-    <div><strong>Status:</strong> {{ employee.status }}</div>
-
+    <div>
+      <strong>Joining Date:</strong>
+      {{ employee.joiningDate | date: "mediumDate" }}
+    </div>
+    <div>
+      <strong>Status:</strong>
+      <span class="status-badge"
+        [ngClass]="{
+          active: employee.status === 'ACTIVE',
+          inactive: employee.status === 'INACTIVE',
+        }"
+      >
+        {{ employee.status }}
+      </span>
+    </div>
   </div>
-  <button (click)="goBack()">← Back</button>
+  <button (click)="goBack()">← Back to Employees</button>
 </div>
-
-<div *ngIf="loading">Loading...</div>

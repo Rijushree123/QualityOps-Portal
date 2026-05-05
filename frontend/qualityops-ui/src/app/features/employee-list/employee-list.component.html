@@ -10,7 +10,7 @@
   <table>
     <thead>
       <tr>
-        <th>ID</th>
+        <!-- <th>ID</th> -->
         <th>Name</th>
         <th>Email</th>
         <th>Department</th>
@@ -24,7 +24,7 @@
 
     <tbody>
       <tr *ngFor="let emp of employees">
-        <td>{{ emp.id }}</td>
+        <!-- <td>{{ emp.id }}</td> -->
         <td>
           <a (click)="viewEmployee(emp.id!)">{{ emp.name }}</a>
         </td>
@@ -33,14 +33,40 @@
         <td>{{ emp.designation }}</td>
         <td>{{ emp.salary | currency }}</td>
         <td>{{ emp.joiningDate }}</td>
-        <td>{{ emp.status }}</td>
         <td>
-          <button (click)="editEmployee(emp)">Edit</button>
-          <button (click)="deleteEmployee(emp.id!)">Delete</button>
+          <span class="status-badge" [ngClass]="emp.status.toLowerCase()">
+            {{ emp.status }}
+          </span>
+        </td>
+        <td>
+          <button
+            class="icon-btn edit"
+            (click)="editEmployee(emp)"
+            title="Edit"
+          >
+            ✏️
+          </button>
+
+          <button
+            class="icon-btn delete"
+            (click)="deleteEmployee(emp.id!)"
+            title="Delete"
+          >
+            🗑️
+          </button>
         </td>
       </tr>
     </tbody>
   </table>
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="currentPage === 0">Prev</button>
+
+    <span>Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+
+    <button (click)="nextPage()" [disabled]="currentPage + 1 === totalPages">
+      Next
+    </button>
+  </div>
 </div>
 
 <!-- Modal -->

@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 
 export interface Toast {
   message: string;
-  type: 'success' | 'error';
+  type: 'success' | 'error' | 'info';
 }
 
 @Injectable({
@@ -13,7 +13,7 @@ export class ToastService {
   private toastSubject = new BehaviorSubject<Toast | null>(null);
   toast$ = this.toastSubject.asObservable();
 
-  show(message: string, type: 'success' | 'error' = 'success') {
+  show(message: string, type: 'success' | 'error' | 'info' = 'success') {
     this.toastSubject.next({ message, type });
 
     // Auto hide after 3 seconds

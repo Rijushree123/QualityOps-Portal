@@ -235,3 +235,51 @@ td a {
 td a:hover{
   text-decoration: underline;
 }
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+.pagination button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 999px; /* pill shape */
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+/* Active = Green */
+.status-badge.active {
+  background-color: #dcfce7;
+  color: #36985c;
+}
+
+/* Inactive = Red */
+.status-badge.inactive {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.status-badge::before {
+  content: "●";
+  margin-right: 6px;
+  font-size: 10px;
+}
+
