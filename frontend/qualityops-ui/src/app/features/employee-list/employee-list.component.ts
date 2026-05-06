@@ -128,6 +128,7 @@ export class EmployeeListComponent implements OnInit {
     salary: null,
     joiningDate: '',
     status: 'ACTIVE',
+    role: '',
   };
 
   // 🔹 Open modal
@@ -143,6 +144,7 @@ export class EmployeeListComponent implements OnInit {
       salary: null,
       joiningDate: '',
       status: 'ACTIVE',
+      role: '',
     };
 
     this.showModal = true;

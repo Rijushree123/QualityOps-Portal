@@ -17,6 +17,7 @@
         <th>Designation</th>
         <th>Salary</th>
         <th>Joining Date</th>
+        <th>Role</th>
         <th>Status</th>
         <th>Actions</th>
       </tr>
@@ -33,6 +34,7 @@
         <td>{{ emp.designation }}</td>
         <td>{{ emp.salary | currency }}</td>
         <td>{{ emp.joiningDate }}</td>
+        <td>{{ emp.role }}</td>
         <td>
           <span class="status-badge" [ngClass]="emp.status.toLowerCase()">
             {{ emp.status }}
@@ -155,7 +157,15 @@
           Joining date is required
         </div>
       </div>
-
+      <div class="field full-width">
+        <select [(ngModel)]="newEmployee.role" name="role" placeholder="Role" required>
+        <option value="ADMIN">Admin</option>
+        <option value="HR">HR</option>
+        <option value="QA">QA</option>
+        <option value="MANAGER">Manager</option>
+      </select>
+      </div>
+      
       <div class="field full-width">
         <select
           name="status"

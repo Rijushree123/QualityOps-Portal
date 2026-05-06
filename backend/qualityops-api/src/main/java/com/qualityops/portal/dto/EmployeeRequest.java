@@ -16,4 +16,5 @@ public class EmployeeRequest {
 	private Double salary;
 	private LocalDate joiningDate;
 	private String status;
+	private String role;
 }

@@ -11,6 +11,7 @@ export interface Employee {
   salary: number | null;
   joiningDate: string;
   status: string;
+  role: string;
 }
 
 @Injectable({

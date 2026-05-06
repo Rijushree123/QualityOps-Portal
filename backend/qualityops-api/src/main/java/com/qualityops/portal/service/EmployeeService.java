@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.qualityops.portal.dto.EmployeeRequest;
 import com.qualityops.portal.entity.Employee;
+import com.qualityops.portal.entity.enums.Role;
 import com.qualityops.portal.exception.BadRequestException;
 import com.qualityops.portal.repository.EmployeeRepository;
 
@@ -28,7 +29,11 @@ public class EmployeeService {
 		Employee employee = Employee.builder().name(request.getName()).email(request.getEmail())
 				.department(request.getDepartment()).designation(request.getDesignation()).salary(request.getSalary())
 				.joiningDate(request.getJoiningDate()).status(request.getStatus()).build();
-
+		try {
+			employee.setRole(Role.valueOf(request.getRole().toUpperCase()));
+		} catch (IllegalArgumentException e) {
+			throw new BadRequestException("Invalid role provided");
+		}
 		return employeeRepository.save(employee);
 	}
 
