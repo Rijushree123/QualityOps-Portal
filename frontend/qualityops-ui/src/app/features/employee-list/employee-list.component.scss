@@ -84,19 +84,23 @@ td button {
 }
 
 /* Edit button */
-td button:first-child {
+.icon-btn.edit {
   background: #10b981;
   color: white;
 }
 
-td button:first-child:hover {
+.icon-btn.edit:hover {
   background: #059669;
 }
 
 /* Delete button */
-td button:last-child {
+.icon-btn.delete {
   background: #ef4444;
   color: white;
+}
+
+.icon-btn.delete:hover {
+  background: #dc2626;
 }
 
 td button:last-child:hover {
