@@ -59,6 +59,14 @@ public class EmployeeService {
 		employee.setJoiningDate(request.getJoiningDate());
 		employee.setStatus(request.getStatus());
 
+		if (request.getRole() != null && !request.getRole().trim().isEmpty()) {
+			try {
+				employee.setRole(Role.valueOf(request.getRole().toUpperCase()));
+			} catch (IllegalArgumentException e) {
+				throw new BadRequestException("Invalid role provided");
+			}
+		}
+
 		return employeeRepository.save(employee);
 	}
 

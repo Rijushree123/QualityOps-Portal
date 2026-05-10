@@ -27,6 +27,33 @@ export class AuthService {
     localStorage.setItem('token', token);
   }
 
+  private decodeToken(): any {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+
+    const payload = token.split('.')[1];
+    if (!payload) {
+      return null;
+    }
+
+    try {
+      return JSON.parse(atob(payload.replace(/-/g, '+').replace(/_/g, '/')));
+    } catch {
+      return null;
+    }
+  }
+
+  getUserRole(): string | null {
+    const decoded = this.decodeToken();
+    return decoded?.role ?? null;
+  }
+
+  isAdmin(): boolean {
+    return this.getUserRole() === 'ADMIN';
+  }
+
   getToken() {
     return localStorage.getItem('token');
   }

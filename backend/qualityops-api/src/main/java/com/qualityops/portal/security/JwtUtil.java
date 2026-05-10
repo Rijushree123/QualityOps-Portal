@@ -13,9 +13,9 @@ public class JwtUtil {
 
 	private final String SECRET = "qualityopsportalverysecuresecretkey123456";
 
-	public String generateToken(String email) {
+	public String generateToken(String email, String role) {
 
-		return Jwts.builder().subject(email).issuedAt(new Date())
+		return Jwts.builder().subject(email).claim("role", role).issuedAt(new Date())
 				.expiration(new Date(System.currentTimeMillis() + 86400000))
 				.signWith(Keys.hmacShaKeyFor(SECRET.getBytes())).compact();
 	}
@@ -26,6 +26,14 @@ public class JwtUtil {
 				.getPayload();
 
 		return claims.getSubject();
+	}
+
+	public String extractRole(String token) {
+
+		Claims claims = Jwts.parser().verifyWith(Keys.hmacShaKeyFor(SECRET.getBytes())).build().parseSignedClaims(token)
+				.getPayload();
+
+		return claims.get("role", String.class);
 	}
 
 	public boolean isValid(String token) {
