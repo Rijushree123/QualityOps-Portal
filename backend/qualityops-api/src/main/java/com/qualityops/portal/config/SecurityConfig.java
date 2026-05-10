@@ -25,6 +25,8 @@ public class SecurityConfig {
 				.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
 						.requestMatchers(HttpMethod.POST, "/api/auth/signup").permitAll()
 						.requestMatchers(HttpMethod.GET, "/api/health").permitAll()
+						.requestMatchers(HttpMethod.DELETE, "/api/employees/**").hasRole("ADMIN")
+						.requestMatchers(HttpMethod.PUT, "/api/users/**").hasRole("ADMIN")
 						.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest().authenticated())
 				.formLogin(form -> form.disable()).httpBasic(httpBasic -> httpBasic.disable());
 		http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

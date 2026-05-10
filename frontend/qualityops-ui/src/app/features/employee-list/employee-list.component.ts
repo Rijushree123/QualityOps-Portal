@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
@@ -8,6 +8,7 @@ import {
   EmployeeService,
   Employee,
 } from '../../core/services/employee.service';
+import { AuthService } from '../../core/services/auth.service';
 import { ToastService } from '../../core/services/toast.service';
 
 @Component({
@@ -23,17 +24,21 @@ export class EmployeeListComponent implements OnInit {
   loading: boolean = false;
   errorMessage: string | null = null;
   isSaving = false;
+  isAdmin: boolean = false;
   currentPage = 0;
   pageSize = 5;
   totalPages = 0;
 
   constructor(
     private employeeService: EmployeeService,
+    private authService: AuthService,
     private toast: ToastService,
     private router: Router,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
+    this.isAdmin = this.authService.isAdmin();
     this.loadEmployees();
   }
 
@@ -198,16 +203,19 @@ export class EmployeeListComponent implements OnInit {
     this.isSaving = true;
     if (this.isEditMode && this.selectedEmployeeId) {
       // 🔹 UPDATE
+      console.log('Sending update for employee:', this.selectedEmployeeId, this.newEmployee);
       this.employeeService
         .updateEmployee(this.selectedEmployeeId, this.newEmployee)
         .pipe(finalize(() => (this.isSaving = false)))
         .subscribe({
-          next: () => {
+          next: (updatedEmployee) => {
+            console.log('Received updated employee:', updatedEmployee);
             this.closeModal();
             this.loadEmployees();
             this.toast.show('Employee updated successfully', 'success'); // Show success message
           },
           error: (err) => {
+            console.error('Update failed:', err);
             this.toast.show('Update failed', 'error');
           },
         });
@@ -234,5 +242,10 @@ export class EmployeeListComponent implements OnInit {
 
   viewEmployee(id: number) {
     this.router.navigate(['/employees', id]);
+  }
+
+  // TrackBy function for ngFor to help Angular track changes
+  trackById(index: number, emp: Employee): number {
+    return emp.id!;
   }
 }

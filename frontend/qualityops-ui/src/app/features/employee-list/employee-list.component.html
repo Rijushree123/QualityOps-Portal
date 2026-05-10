@@ -24,7 +24,7 @@
     </thead>
 
     <tbody>
-      <tr *ngFor="let emp of employees">
+      <tr *ngFor="let emp of employees; trackBy: trackById">
         <!-- <td>{{ emp.id }}</td> -->
         <td>
           <a (click)="viewEmployee(emp.id!)">{{ emp.name }}</a>
@@ -50,6 +50,7 @@
           </button>
 
           <button
+            *ngIf="isAdmin"
             class="icon-btn delete"
             (click)="deleteEmployee(emp.id!)"
             title="Delete"
@@ -157,7 +158,7 @@
           Joining date is required
         </div>
       </div>
-      <div class="field full-width">
+      <div class="field full-width" *ngIf="isAdmin">
         <select [(ngModel)]="newEmployee.role" name="role" placeholder="Role" required>
         <option value="ADMIN">Admin</option>
         <option value="HR">HR</option>

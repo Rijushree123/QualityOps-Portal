@@ -33,7 +33,7 @@ public class AuthController {
 		}
 
 		User user = User.builder().fullName(request.getFullName()).email(request.getEmail())
-				.password(passwordEncoder.encode(request.getPassword())).role("EMPLOYEE").build();
+				.password(passwordEncoder.encode(request.getPassword())).role("QA").build();
 
 		userRepository.save(user);
 
@@ -50,6 +50,6 @@ public class AuthController {
 			throw new RuntimeException("Invalid password");
 		}
 
-		return jwtUtil.generateToken(user.getEmail());
+		return jwtUtil.generateToken(user.getEmail(), user.getRole());
 	}
 }
