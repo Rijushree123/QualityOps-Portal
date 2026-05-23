@@ -1,14 +1,11 @@
 # QualityOps Portal
 
-> An Enterprise-Grade Quality Assurance & Employee Management System
+> An Enterprise-Grade employeessQualit(https://img.shields.io/badge/Status-Development-yellow)
 
-![QualityOps](https://img.shields.io/badge/Status-Development-yellow)
-![Java](https://img.shields.io/badge/Java-21-red)
-![Spring%20Boot](https://img.shields.io/badge/Spring%20Boot-3.5.14-green)
-![Angular](https://img.shields.io/badge/Angular-19.2.0-blue)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Latest-blue)
-
-## 📋 Table of Contents
+on
+employee 1023461 travels  rajateja bus employees
+## 📋 Table of Contents 
 
 - [Overview](#overview)
 - [Features](#features)
@@ -41,7 +38,7 @@ The application is built with:
 
 ### 📸 Application Screenshots
 
-The application features a modern, responsive UI:
+The application features a modern, responsive UI: pa
 
 1. **Login Interface** - Secure authentication with email and password
 2. **Dashboard** - Key metrics display (Total Employees, Open Defects, Pass Rate, Pending Leaves)
